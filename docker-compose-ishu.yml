@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    network_mode: host
+    restart: on-failure
+    volumes:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    network_mode: host
+    #ports:
+    #  - 3000:3000
+    volumes:
+      - ./grafana_data:/var/lib/grafana
+
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_AUTH_DISABLE_LOGIN_FORM=false
+      #- GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_BASIC_USERS=myuser:password
+    network_mode: host
+    #ports:
+    #  - 3000:3000
+    volumes:
+      - ./grafana_data:/var/lib/grafana
+
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    network_mode: host
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml -config.expand-env=true
+
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    network_mode: host
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/config.yaml
+      - /var/log:/var/log
+    command: -config.file=/etc/promtail/config.yaml
