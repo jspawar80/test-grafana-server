@@ -1,12 +1,12 @@
-### PM2 Metrics
+# PM2 Metrics
 --------------------------------------------------------------------
 
-#Easy Install with PM2
+### Easy Install with PM2
 ```
 pm2 install pm2-metrics
 ```
 
-#Or Clone and run as a seperate application
+### Or Clone and run as a seperate application
 
 ```
 $ git clone https://github.com/saikatharryc/pm2-prometheus-exporter.git
@@ -19,7 +19,7 @@ $ pm2 start exporter.js --name pm2-metrics
 http://<HOST>:9209/metrics
 ```
 
-# For Prometheus Config
+### For Prometheus Config
 
 in prometheus.yaml inside scrape_configs add this block:
 
