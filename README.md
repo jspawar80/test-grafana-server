@@ -1,34 +1,20 @@
-# PM2 Metrics
-
+# To get the PM2 Metrics on the Grafana Dashboard 
+### Frist Install the PM2 Metrics Exporter
 ### Easy Install with PM2
 ```
 pm2 install pm2-metrics
 ```
 
-### Or Clone and run as a seperate application
-
-```
-$ git clone https://github.com/saikatharryc/pm2-prometheus-exporter.git
-$ npm install
-$ pm2 start exporter.js --name pm2-metrics
-```
 #Open your browser
 
 ```
 http://<HOST>:9209/metrics
 ```
+### Second create the docker-compose.yaml 
 
-### For Prometheus Config
-
-in prometheus.yaml inside scrape_configs add this block:
-
+### Third create the prometheus.yaml For Prometheus Config
+### Foruth Run the docker-compose.yaml 
 ```
-- job_name: pm2-metrics
-scrape_interval: 10s
-scrape_timeout: 10s
-metrics_path: /metrics
-scheme: http
-static_configs:
-  - targets:
-      - localhost:9209
+docker-compose up -d
 ```
+
